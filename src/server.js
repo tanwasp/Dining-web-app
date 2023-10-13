@@ -19,4 +19,3 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 const serviceAccount = require(process.env.FIRESTORE_SERVICE_ACCOUNT);
-

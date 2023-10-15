@@ -13,8 +13,4 @@ Currently, only the mongoDB version of the backend server is working.
 2. Set up a mongoDB restaurant dataset with the following format/ fields
 3. Run "npm install"
 
-### HTTP requests and URLs
-* 
-
-### Methods and function calls
-* 
+Please read the docs.md for futher information

@@ -1,0 +1,6 @@
+/firestore-places/node_modules
+/firestore-places/.env
+/firestore-places/serviceAccountKey.json
+
+/backend-mongoDB/node_modules
+/backend-mongoDB/.env

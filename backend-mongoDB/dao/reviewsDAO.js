@@ -1,5 +1,5 @@
 import mongodb from "mongodb"
-const ObjectId = mongodb.ObjectID
+const ObjectId = mongodb.ObjectId
 
 let reviews
 
@@ -21,7 +21,7 @@ export default class ReviewsDAO {
           user_id: user._id,
           date: date,
           text: review,
-          restaurant_id: ObjectId(restaurantId), }
+          restaurant_id: new ObjectId(restaurantId), }
 
       return await reviews.insertOne(reviewDoc)
     } catch (e) {

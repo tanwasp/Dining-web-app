@@ -14,3 +14,9 @@ Currently, only the mongoDB version of the backend server is working.
 3. Run "npm install"
 
 Please read the docs.md for futher information
+
+- Main item 1
+	- Sub-item 1.1
+	- Sub-item 1.2
+- Main item 2
+	- Sub-item 2.1

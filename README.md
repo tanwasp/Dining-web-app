@@ -12,6 +12,8 @@ Currently, only the mongoDB version of the backend server is working.
 1. Clone the repository
 2. Set up a mongoDB restaurant dataset with the following format/ fields
 3. Run "npm install"
+4. Run "node index.js"
+5. Navigate to http://localhost:5000/api/v1/restaurants
 
 ### HTTP requests and URLs
 default - /api/v1/restaurants

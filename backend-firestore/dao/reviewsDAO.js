@@ -1,4 +1,4 @@
-import db from "./config/firebaseConfig.js";
+import db from "../config/firebaseConfig.js";
 
 export default class ReviewsDAO {
   static reviews = db.collection("reviews"); 

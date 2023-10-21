@@ -1,4 +1,4 @@
-import db from 'path_to_firebase.js'; 
+import db from "../config/firebaseConfig.js";
 
 export default class RestaurantsDAO {
 

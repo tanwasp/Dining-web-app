@@ -6,8 +6,8 @@ export default class RestaurantsDAO {
 
   static async getRestaurants({
     filters = null,
-    page = 0,
     restaurantsPerPage = 20,
+    lastDocumentID = null
   } = {}) {
     let query = this.restaurants;
 
@@ -21,35 +21,31 @@ export default class RestaurantsDAO {
       }
     }
 
-    // Note: For pagination, you would have to implement startAt and endAt using Firestore document snapshots
+    // For pagination
+    if (lastDocumentID) {
+      const lastDocumentSnapshot = await this.restaurants.doc(lastDocumentID).get();
+      query = query.startAfter(lastDocumentSnapshot);
+    }
 
-    let restaurantsList;
+    let restaurantsList = [];
     try {
-      restaurantsList = await query.limit(restaurantsPerPage).get();
+      const snapshot = await query.limit(restaurantsPerPage).get();
+      restaurantsList = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
     } catch (e) {
       console.error(`Unable to fetch restaurants, ${e}`)
-      return { restaurantsList: [], totalNumRestaurants: 0 }
     }
 
-    let totalNumRestaurants;
-    try {
-      totalNumRestaurants = (await this.restaurants.get()).size;
-    } catch (e) {
-      console.error(`Unable to count restaurants, ${e}`)
-      return { restaurantsList: [], totalNumRestaurants: 0 }
-    }
-
-    return { restaurantsList: restaurantsList.docs.map(doc => doc.data()), totalNumRestaurants };
+    return { restaurantsList };
   }
 
   static async getRestaurantByID(id) {
     try {
       const restaurantDoc = await this.restaurants.doc(id).get();
+      if (!restaurantDoc.exists) return null;
       const restaurantData = restaurantDoc.data();
       
-      // Fetching reviews (Firestore does not have $lookup, so we'll do this in two steps)
+      // Fetching reviews
       const reviews = await db.collection('reviews').where('restaurant_id', '==', id).orderBy('date', 'desc').get();
-
       restaurantData.reviews = reviews.docs.map(doc => doc.data());
 
       return restaurantData;
@@ -60,9 +56,11 @@ export default class RestaurantsDAO {
   }
 
   static async getCuisines() {
+    // The method here is still not very optimal as it reads all restaurants. 
+    // But deduplication is done on the server side to reduce network traffic.
     let cuisines = [];
     try {
-      const snapshot = await this.restaurants.get();
+      const snapshot = await this.restaurants.select("cuisine").get(); // use select to fetch only cuisine field
       const allCuisines = snapshot.docs.map(doc => doc.data().cuisine);
       cuisines = [...new Set(allCuisines)]; // deduplicate
       return cuisines;

@@ -8,3 +8,7 @@
 
 /backend-mongoDB/node_modules
 /backend-mongoDB/.env
+
+/frontend/node_modules
+/frontend/.env
+```

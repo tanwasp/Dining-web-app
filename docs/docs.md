@@ -1,24 +1,41 @@
 ### HTTP requests and URLs
 default - /api/v1/restaurants
+example urls are assuming a port of 5000
 #### Searching/ Checking out Restaurants
 - **/** 
-    - type: get
+    - type: GET
     - this searches for restaurants based on filters: 
         - name: returns restaurants that contain name in the restaurant name
+            - example http://localhost:5000/api/v1/restaurants?name=cafe
         - zipcode
+            - example http://localhost:5000/api/v1/restaurants?zipcode=10101
         - cuisine
+            - example http://localhost:5000/api/v1/restaurants?cuisine=India
+        - page
+            - http://localhost:5000/api/v1/restaurants?page=2
+    - with no parameters, it returns a homepage of the first 20 restaurants in the mongoDB database
+        - example http://localhost:5000/api/v1/restaurants
+    - with full parameters
+        - http://localhost:5000/api/v1/restaurants?name=cafe&zipcode=10012&cuisine=India&page=3
     - calls RestaurantCtrl.apiGetRestaurants
+
+
 - **/id/:id**
-    - type: get
+    - type: GET
     - gets the reviews of a restaurant
     - calls RestaurantCtrl.apiGetRestaurantById
+    - example http://localhost:5000/api/v1/restaurants/id/5eb3d668b31de5d588f42a35
+
+
 - **/cuisines**
-    - type: get
+    - type: GET
     - this gets a list of the distinct cuisines available 
     - calls RestaurantCtrl.apiGetRestaurantCuisines
+    - example http://localhost:5000/api/v1/restaurants/cuisines
+
 
 - **/review**
-    - type: post
+    - type: POST
         - posts a review for a restaurant
         - body takes an object with the fields as shown in the example below
         - ```
@@ -30,7 +47,8 @@ default - /api/v1/restaurants
             }
             ```
         - adds a document to the reviews collection (which it creates if it doesn't exist) 
-    - type: put
+        - url http://localhost:5000/api/v1/restaurants/review
+    - type: PUT
         - edits a review for a restaurant
         - body takes an object with the fields as shown in the example below
         - ```
@@ -41,7 +59,8 @@ default - /api/v1/restaurants
             "name": "Messi"
             }
             ```
-    - type: delete
+        - url http://localhost:5000/api/v1/restaurants/review
+    - type: DELETE
         - deletes a review for a restaurant
         - url request takes id query for review id
             - example: http://localhost:5000/api/v1/restaurants/review?id=652c5a548db04b6b4d38f97f
@@ -52,5 +71,7 @@ default - /api/v1/restaurants
             "name": "Messi" (optional)
             }
             ```
+    - type: GET
+        TO BE ADDED
 
 ### Methods and function calls

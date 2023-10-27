@@ -1,62 +1,52 @@
-import mongodb from "mongodb"
-const ObjectId = mongodb.ObjectId
+import pool from '../config/db.js';
 
-let reviews
 
 export default class ReviewsDAO {
-  static async injectDB(conn) {
-    if (reviews) {
-      return
-    }
-    try {
-      reviews = await conn.db(process.env.RESTREVIEWS_NS).collection("reviews")
-    } catch (e) {
-      console.error(`Unable to establish collection handles in userDAO: ${e}`)
-    }
-  }
-
   static async addReview(restaurantId, user, review, date) {
     try {
-      const reviewDoc = { name: user.name,
-          user_id: user._id,
-          date: date,
-          text: review,
-          restaurant_id: new ObjectId(restaurantId), }
-
-      return await reviews.insertOne(reviewDoc)
+      const query = `
+        INSERT INTO reviews (name, user_id, date, text, restaurant_id)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *;
+      `;
+      const values = [user.name, user._id, date, review, restaurantId];
+      const result = await pool.query(query, values);
+      return result.rows[0];
     } catch (e) {
-      console.error(`Unable to post review: ${e}`)
-      return { error: e }
+      console.error(`Unable to post review: ${e}`);
+      return { error: e };
     }
   }
 
   static async updateReview(reviewId, userId, text, date) {
     try {
-      const updateResponse = await reviews.updateOne(
-        { user_id: userId, _id: new ObjectId(reviewId)},
-        { $set: { text: text, date: date  } },
-      )
-
-      return updateResponse
+      const query = `
+        UPDATE reviews
+        SET text = $1, date = $2
+        WHERE id = $3 AND user_id = $4
+        RETURNING *;
+      `;
+      const values = [text, date, reviewId, userId];
+      const result = await pool.query(query, values);
+      return result.rowCount;
     } catch (e) {
-      console.error(`Unable to update review: ${e}`)
-      return { error: e }
+      console.error(`Unable to update review: ${e}`);
+      return { error: e };
     }
   }
 
   static async deleteReview(reviewId, userId) {
-
     try {
-      const deleteResponse = await reviews.deleteOne({
-        _id: new ObjectId(reviewId),
-        user_id: userId,
-      })
-
-      return deleteResponse
+      const query = `
+        DELETE FROM reviews
+        WHERE id = $1 AND user_id = $2;
+      `;
+      const values = [reviewId, userId];
+      const result = await pool.query(query, values);
+      return result.rowCount;
     } catch (e) {
-      console.error(`Unable to delete review: ${e}`)
-      return { error: e }
+      console.error(`Unable to delete review: ${e}`);
+      return { error: e };
     }
   }
-
 }

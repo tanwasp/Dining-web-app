@@ -1,6 +1,5 @@
-/firestore-places/node_modules
-/firestore-places/.env
-/firestore-places/serviceAccountKey.json
+/backend-postgreSQL/node_modules
+/backend-postgreSQL/.env
 
 /backend-firestore/node_modules
 /backend-firestore/.env

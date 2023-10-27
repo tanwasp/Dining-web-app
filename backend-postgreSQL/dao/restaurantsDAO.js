@@ -111,6 +111,3 @@ export default class RestaurantsDAO {
     }
   }
 }
-
-
-

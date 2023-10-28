@@ -28,6 +28,7 @@ export default class RestaurantsController {
         entries_per_page: restaurantsPerPage,
         total_results: totalNumRestaurants,
       };
+      console.log(`api, ${response}`)
       res.json(response);
     } catch (e) {
       console.log(`api, ${e}`);

@@ -47,7 +47,7 @@ const Restaurant = sequelize.define('Restaurant', {
   priceRange: {
     type: DataTypes.INTEGER,
     allowNull: true
-  }
+  },
 }, {
   tableName: 'restaurants',
   timestamps: false  // Assuming you don't have created_at and updated_at columns

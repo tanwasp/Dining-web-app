@@ -1,7 +1,10 @@
 # Dining-web-app
 
-This is a backend of a restaurant search and review web app. This repository contains two folders:
-* __backend_mongoDB__: 
+This is a backend of a restaurant search and review web app. This repository contains four folders:
+* __backend_mongoDB__: the backend linked to a mongoDB database. Fully functional for this iteration.
+* **backend_postgreSQL**: the backend linked to a postgreSQL database. Currently non functional
+* **backend-firestore**: the backend linked to firestore
+* **frontend**: the frontend of the web app developed using react.js
 
 ## Technologies
 * __Languages__: JavaScript with Node and Express

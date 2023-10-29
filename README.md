@@ -11,12 +11,14 @@ This is a backend of a restaurant search and review web app. This repository con
 * __Database__: Changing from MongoDB to Firestore
 
 ## How to use
-Currently, only the mongoDB version of the backend server is working. 
+Currently, only the mongoDB version of the backend server is working completely. 
 1. Clone the repository
 2. Set up a mongoDB restaurant dataset with the following format/ fields
 3. Run "npm install"
-4. Run "node index.js"
-5. Navigate to http://localhost:5000/api/v1/restaurants
+4. Run "npm start"
+5. Navigate to frontend/
+6. Run "npm install"
+7. Run "npm start"!
 
 ### HTTP requests and URLs
 default - /api/v1/restaurants

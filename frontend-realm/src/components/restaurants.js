@@ -81,8 +81,6 @@ const Restaurant = props => {
                                 currentReview: review
                               }
                             }} className="btn btn-primary col-lg-5 mx-1 mb-1">Edit</Link>
-
-
                           </div>                   
                        }
                      </div>

@@ -1,4 +1,4 @@
-# Dining-web-app
+# LunchBox WebApp
 
 This is a backend of a restaurant search and review web app. This repository contains four folders:
 * __backend_mongoDB__: the backend linked to a mongoDB database. Fully functional for this iteration.

@@ -1,15 +1,14 @@
-import sequelize from '../config/db.js';
-import Restaurant from './Restaurant.js';
+import { sequelize } from '../config/db.js';
+// import User from './User.js';
 import Review from './Review.js';
+import Restaurant from './Restaurant.js';
 
-Restaurant.hasMany(Review, { foreignKey: 'restaurantId' });
-Review.belongsTo(Restaurant, { foreignKey: 'restaurantId' });
+// Set up associations
+// User.hasMany(Review, { foreignKey: 'userid' });
+// Review.belongsTo(User, { foreignKey: 'userid' });
 
-const db = {
-  sequelize,
-  Sequelize,
-  Restaurant,
-  Review
-};
+// Restaurant.hasMany(Review, { foreignKey: 'restaurantid' });
+// Review.belongsTo(Restaurant, { foreignKey: 'restaurantid' });
 
-export default db;
+// Export models and sequelize instance
+export { sequelize, Review, Restaurant };

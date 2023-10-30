@@ -1,55 +1,42 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/db.js';
 
-const Restaurant = sequelize.define('Restaurant', {
+const Restaurant = sequelize.define('restaurant', {
   restaurantid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
+    autoIncrement: true
   },
-  foreignresid: {
-    type: DataTypes.STRING,
-  },
+  foreignresid: DataTypes.STRING,
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
-  address: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  city: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  state: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  country: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  postalCode: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  coordinates: {
-    type: DataTypes.GEOMETRY('POINT'),
-    allowNull: true
-  },
-  stars: {
-    type: DataTypes.FLOAT,
-    allowNull: true
-  },
-  priceRange: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-}, {
-  tableName: 'restaurants',
-  timestamps: false  // Assuming you don't have created_at and updated_at columns
+  address: DataTypes.STRING,
+  city: DataTypes.STRING,
+  state: DataTypes.STRING,
+  country: DataTypes.STRING,
+  postalcode: DataTypes.STRING,
+  coordinates: DataTypes.GEOMETRY('POINT'),
+  stars: DataTypes.DOUBLE,
+  pricerange: DataTypes.INTEGER,
+  cuisine: DataTypes.STRING,
+  // namesearchvector: {
+  //   type: DataTypes.TSVECTOR,
+  //   allowNull: true
+  // }
+},
+{
+  timestamps:false
+}
+);
+
+// Define a hook to update the nameSearchVector whenever a restaurant's name changes
+Restaurant.addHook('beforeSave', (restaurant) => {
+  if (restaurant.changed('name')) {
+    // Update the search vector using sequelize.fn and sequelize.literal
+    restaurant.nameSearchVector = sequelize.fn('to_tsvector', sequelize.literal('plainto_tsquery(' + sequelize.escape(restaurant.name) + ')'));
+  }
 });
 
 export default Restaurant;

@@ -1,15 +1,28 @@
-import express from 'express';
 import dotenv from 'dotenv';
-import { testDbConnection } from './config/db.js';
+import { sequelize, testDbConnection } from './config/db.js';
+import app from './server.js';
 
 dotenv.config();
 
-const app = express();
 const port = process.env.PORT || 8000;
 
 // Database connection test
 testDbConnection();
 
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+const startServer = async () => {
+  
+  try {
+    await sequelize.sync();
+    console.log('Database synced successfully.');
+
+    app.listen(port, () => {
+      console.log(`listening on port ${port}`);
+    });
+
+  } catch (error) {
+    console.error('Error syncing database:', error);
+  }
+};
+
+startServer();
+

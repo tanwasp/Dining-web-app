@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import {Sequelize, Op} from 'sequelize';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -18,6 +18,6 @@ const testDbConnection = async () => {
   }
 };
 
-export { sequelize, testDbConnection };
+export { sequelize, testDbConnection, Op };
 
 

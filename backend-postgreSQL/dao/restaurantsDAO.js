@@ -1,4 +1,4 @@
-import {sequelize} from '../config/db.js';
+import {sequelize, Op} from '../config/db.js';
 import Restaurant from '../models/Restaurant.js'; 
 
 export default class RestaurantsDAO {
@@ -13,11 +13,11 @@ export default class RestaurantsDAO {
   
       if (filters) {
         if ("name" in filters) {
-          whereClause.name = { [sequelize.Op.like]: `%${filters.name}%` };
+          whereClause.name = { [Op.like]: `%${filters.name}%` };
         } else if ("cuisine" in filters) {
           whereClause.cuisine = filters.cuisine;
         } else if ("zipcode" in filters) {
-          whereClause.postalCode = filters.zipcode;
+          whereClause.postalcode = filters.zipcode;
         }
       }
   
@@ -27,7 +27,7 @@ export default class RestaurantsDAO {
         offset: restaurantsPerPage * page
       });
   
-      const totalNumRestaurants = await Restaurant.count();
+      const totalNumRestaurants = await Restaurant.count({ where: whereClause });
   
       return { restaurantsList: restaurants, totalNumRestaurants };
     } catch (e) {

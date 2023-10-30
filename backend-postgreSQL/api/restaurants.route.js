@@ -14,4 +14,4 @@ router.route("/cuisines").get(RestaurantsCtrl.apiGetRestaurantCuisines)
 //   .put(ReviewsCtrl.apiUpdateReview)
 //   .delete(ReviewsCtrl.apiDeleteReview)
 
-export default router
+export default router 

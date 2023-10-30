@@ -1,5 +1,5 @@
 # MongoDB Data
-The backend-mongoDB folder is connected to a mongoDB database and has the following collections:
+The backend-mongoDB code is connected to a mongoDB database and has the following collections:
 - __restaurants__ been populated the mongoDB sample dataset.
 - __reviews__ populated by users 
 

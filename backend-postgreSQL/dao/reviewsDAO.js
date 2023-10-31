@@ -6,7 +6,7 @@ export default class ReviewsDAO {
   static async addReview(restaurantId, userName, userId, reviewText, date) {
     try {
       const reviewDoc = {
-        name: userName,
+        username: userName,
         userid: userId,
         date: date,
         comment: reviewText,
@@ -23,8 +23,8 @@ export default class ReviewsDAO {
   static async updateReview(reviewId, userId, text, date) {
     try {
       const updateResponse = await Review.update(
-        { text: text, date: date },
-        { where: { id: reviewId, userid: userId } }
+        { comment: text, date: date },
+        { where: { reviewid: reviewId, userid: userId } }
       );
 
       return updateResponse;
@@ -37,7 +37,7 @@ export default class ReviewsDAO {
   static async deleteReview(reviewId, userId) {
     try {
       const deleteResponse = await Review.destroy({
-        where: { id: reviewId, userid: userId }
+        where: { reviewid: reviewId, userid: userId }
       });
 
       return deleteResponse;

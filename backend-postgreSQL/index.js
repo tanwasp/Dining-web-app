@@ -5,6 +5,8 @@ import {Review, Restaurant} from './models/index.js';
 
 dotenv.config();
 
+await Review.sync({alter: true});
+
 const port = process.env.PORT || 8000;
 
 // Database connection test
@@ -13,7 +15,9 @@ testDbConnection();
 const startServer = async () => {
   
   try {
+    
     await sequelize.sync();
+    
     console.log('Database synced successfully.');
 
     app.listen(port, () => {

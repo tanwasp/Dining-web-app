@@ -7,8 +7,8 @@ import Restaurant from './Restaurant.js';
 // User.hasMany(Review, { foreignKey: 'userid' });
 // Review.belongsTo(User, { foreignKey: 'userid' });
 
-// Restaurant.hasMany(Review, { foreignKey: 'restaurantid' });
-// Review.belongsTo(Restaurant, { foreignKey: 'restaurantid' });
+Restaurant.hasMany(Review, { foreignKey: 'restaurantid', as: 'reviews' });
+Review.belongsTo(Restaurant, { foreignKey: 'restaurantid' });
 
 // Export models and sequelize instance
 export { sequelize, Review, Restaurant };

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { sequelize, testDbConnection } from './config/db.js';
 import app from './server.js';
+import {Review, Restaurant} from './models/index.js';
 
 dotenv.config();
 

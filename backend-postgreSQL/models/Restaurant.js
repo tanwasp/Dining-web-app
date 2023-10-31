@@ -5,7 +5,8 @@ const Restaurant = sequelize.define('restaurant', {
   restaurantid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   foreignresid: DataTypes.STRING,
   name: {
@@ -32,11 +33,11 @@ const Restaurant = sequelize.define('restaurant', {
 );
 
 // Define a hook to update the nameSearchVector whenever a restaurant's name changes
-Restaurant.addHook('beforeSave', (restaurant) => {
-  if (restaurant.changed('name')) {
-    // Update the search vector using sequelize.fn and sequelize.literal
-    restaurant.nameSearchVector = sequelize.fn('to_tsvector', sequelize.literal('plainto_tsquery(' + sequelize.escape(restaurant.name) + ')'));
-  }
-});
+// Restaurant.addHook('beforeSave', (restaurant) => {
+//   if (restaurant.changed('name')) {
+//     // Update the search vector using sequelize.fn and sequelize.literal
+//     restaurant.nameSearchVector = sequelize.fn('to_tsvector', sequelize.literal('plainto_tsquery(' + sequelize.escape(restaurant.name) + ')'));
+//   }
+// });
 
 export default Restaurant;
